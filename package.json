@@ -1,6 +1,6 @@
 {
   "name": "rx-chatbot",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "main": "src/index.js",
   "license": "MIT",
   "scripts": {
@@ -10,6 +10,10 @@
     "googleapis": "^84.0.0"
   },
   "devDependencies": {
-    "@types/node": "^16.7.1"
+    "@types/node": "^16.7.1",
+    "google-auth-library": "^7.6.2"
+  },
+  "peerDependencies": {
+    "rxjs": "6.6.6"
   }
 }
