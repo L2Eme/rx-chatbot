@@ -1,4 +1,4 @@
-const { MessageFormatter } = require("../../src/util/MessageFormatter")
+const { MessageFormatter } = require("../../util/MessageFormatter")
 
 describe("MessageFormatter", () => {
     it("should return original message if maxlength longer than message length", () => {
