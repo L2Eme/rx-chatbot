@@ -1,0 +1,15 @@
+{
+  "name": "rx-chatbot",
+  "version": "0.8.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --silent"
+  },
+  "dependencies": {
+    "googleapis": "^84.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.1"
+  }
+}
