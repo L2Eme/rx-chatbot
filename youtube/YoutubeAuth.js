@@ -56,27 +56,23 @@ class YoutubeAuth {
     }
     /**
      * express open one url to listen google OAuth callback.
+     * once the callback url is reach, call this function to get tokens
+     *
      * @param {string} code google OAuth return a code
      */
     getTokensWithCode(code) {
         return __awaiter(this, void 0, void 0, function* () {
             // 获取到的是getToken的response，response中才有token
             const response = yield this.auth.getToken(code);
-            // 并不需要单独使用authorize方法，此处可以inline it
-            yield this.authorize(response);
-        });
-    }
-    authorize({ tokens }) {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.auth.setCredentials(tokens);
-            yield file.save(this.tokenFilePath, JSON.stringify(tokens));
+            this.auth.setCredentials(response.tokens);
+            // save tokens in file
+            yield file.save(this.tokenFilePath, JSON.stringify(response.tokens));
         });
     }
     /**
      * load token from file
-     * 命名的方式有问题, TODO: rename this
      */
-    checkTokens() {
+    loadTokensFromFile() {
         return __awaiter(this, void 0, void 0, function* () {
             const file_contents = yield file.read(this.tokenFilePath);
             const tokens = JSON.parse(file_contents);

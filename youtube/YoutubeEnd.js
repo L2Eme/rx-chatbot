@@ -28,11 +28,14 @@ class YoutubeEnd {
         // frequency of pull chat message, default is 5000 millisecond
         this.pullChatRate = (_b = opts.pullChatRate) !== null && _b !== void 0 ? _b : 5000;
     }
+    /**
+     * many stream is start with auth
+     */
     auth$() {
-        return rx.from(this.auth.checkTokens());
+        return rx.from(this.auth.loadTokensFromFile());
     }
     loadAuthToken() {
-        return this.auth.checkTokens();
+        return this.auth.loadTokensFromFile();
     }
     /**
      * this will list all liveBroadcasts you have,
@@ -81,8 +84,8 @@ class YoutubeEnd {
     }
     /**
      * this may be send in a sequence, so use rx stream
-     * @param message
-     * @param chatId
+     * @param message text message
+     * @param chatId live chat id
      */
     insert_liveChatMessages$(message, chatId) {
         let messageParts = MessageFormatter_1.MessageFormatter.createMessageParts(message, YOUTUBE_MAX_MESSAGE_LENGTH);

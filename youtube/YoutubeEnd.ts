@@ -34,12 +34,15 @@ export class YoutubeEnd {
 		this.pullChatRate = opts.pullChatRate ?? 5000;
 	}
 
+	/**
+	 * many stream is start with auth
+	 */
 	auth$() {
-		return rx.from(this.auth.checkTokens())
+		return rx.from(this.auth.loadTokensFromFile())
 	}
 
 	loadAuthToken() {
-		return this.auth.checkTokens()
+		return this.auth.loadTokensFromFile()
 	}
 
 	/**
@@ -96,8 +99,8 @@ export class YoutubeEnd {
 
 	/**
 	 * this may be send in a sequence, so use rx stream
-	 * @param message 
-	 * @param chatId 
+	 * @param message text message
+	 * @param chatId live chat id
 	 */
 	insert_liveChatMessages$(message: string, chatId: string) {
 		let messageParts = MessageFormatter.createMessageParts(
