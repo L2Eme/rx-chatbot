@@ -31,7 +31,7 @@ export class YoutubeAuth {
 		clientSecret: string,
 		redirectURI: string,
 		tokenFilePath: string,
-		scope: string[],
+		scope?: string[],
 	}) {
 
 		this.auth = new OAuth2(clientId, clientSecret, redirectURI)
