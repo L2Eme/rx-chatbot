@@ -32,7 +32,8 @@ class YoutubeEnd {
      * many stream is start with auth
      */
     auth$() {
-        return rx.from(this.auth.loadTokensFromFile());
+        // 一定要在从固定的值开始，否则retry时不会执行loadTokensFromFile
+        return rx.of(1).pipe(op.switchMap(() => this.auth.loadTokensFromFile()));
     }
     loadAuthToken() {
         return this.auth.loadTokensFromFile();

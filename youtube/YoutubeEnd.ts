@@ -16,9 +16,9 @@ type YoutubeAPI = youtube_v3.Youtube
  */
 export class YoutubeEnd {
 
-	auth: YoutubeAuth
-	api: YoutubeAPI
-	pullChatRate: number
+	readonly auth: YoutubeAuth
+	readonly api: YoutubeAPI
+	readonly pullChatRate: number
 
 	constructor(auth: YoutubeAuth, opts: {
 		api?: YoutubeAPI,
@@ -38,7 +38,10 @@ export class YoutubeEnd {
 	 * many stream is start with auth
 	 */
 	auth$() {
-		return rx.from(this.auth.loadTokensFromFile())
+		// 一定要在从固定的值开始，否则retry时不会执行loadTokensFromFile
+		return rx.of(1).pipe(
+			op.switchMap(() => this.auth.loadTokensFromFile())
+		)
 	}
 
 	loadAuthToken() {
@@ -70,6 +73,7 @@ export class YoutubeEnd {
 			part: ["snippet", "authorDetails"],
 			liveChatId: chatId,
 			pageToken: pageToken,
+			// maxResults: 500, // default maxResults is 500
 		}
 		return this.api.liveChatMessages.list(request).then(res => res.data)
 	}
